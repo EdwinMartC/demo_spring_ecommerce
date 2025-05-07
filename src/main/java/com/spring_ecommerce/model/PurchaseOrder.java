@@ -1,23 +1,36 @@
 package com.spring_ecommerce.model;
 
+import jakarta.persistence.*;
+
 import java.util.Date;
 
-public class purchaseOrder {
+@Entity
+@Table(name = "order")
+public class PurchaseOrder {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String name;
     private Date creationDate;
     private Date finalizationDate;
     private double total;
 
-    public purchaseOrder() {
+    @ManyToOne
+    private User user;
+    @OneToOne(mappedBy = "purchaseOrder")
+    private OrderDetail detail;
+
+    public PurchaseOrder() {
     }
 
-    public purchaseOrder(Integer id, String name, Date creationDate, Date finalizationDate, double total) {
+    public PurchaseOrder(Integer id, String name, Date creationDate, Date finalizationDate, double total, User user,OrderDetail detail) {
         this.id = id;
         this.name = name;
         this.creationDate = creationDate;
         this.finalizationDate = finalizationDate;
         this.total = total;
+        this.user = user;
+        this.detail = detail;
     }
 
     public Integer getId() {
@@ -58,6 +71,22 @@ public class purchaseOrder {
 
     public void setTotal(double total) {
         this.total = total;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public OrderDetail getDetail() {
+        return detail;
+    }
+
+    public void setDetail(OrderDetail detail) {
+        this.detail = detail;
     }
 
     @Override

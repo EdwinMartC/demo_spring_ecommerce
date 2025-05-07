@@ -1,6 +1,14 @@
 package com.spring_ecommerce.model;
 
-public class product {
+import jakarta.persistence.*;
+
+import java.util.List;
+
+@Entity
+@Table(name = "product")
+public class Product {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String name;
     private String description;
@@ -8,16 +16,20 @@ public class product {
     private String price;
     private String quantity;
 
-    public product() {
+    @ManyToOne
+    private User user;
+
+    public Product() {
     }
 
-    public product(Integer id, String name, String description, String image, String price, String quantity) {
+    public Product(Integer id, String name, String description, String image, String price, String quantity, User user) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.image = image;
         this.price = price;
         this.quantity = quantity;
+        this.user = user;
     }
 
     public Integer getId() {
@@ -66,6 +78,14 @@ public class product {
 
     public void setQuantity(String quantity) {
         this.quantity = quantity;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @Override

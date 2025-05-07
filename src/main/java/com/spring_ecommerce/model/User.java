@@ -1,6 +1,14 @@
 package com.spring_ecommerce.model;
 
-public class user {
+import jakarta.persistence.*;
+
+import java.util.List;
+
+@Entity
+@Table(name = "users")
+public class User {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String name;
     private String userName;
@@ -10,7 +18,12 @@ public class user {
     private String type;
     private String password;
 
-    public user(Integer id, String name, String userName, String email, String address, String numberPhone, String type, String password) {
+    @OneToMany(mappedBy = "user")
+    private List<Product> productList;
+    @OneToMany(mappedBy = "user")
+    private List<PurchaseOrder> purchaseOrderList;
+
+    public User(Integer id, String name, String userName, String email, String address, String numberPhone, String type, String password, List<Product> productList, List<PurchaseOrder> purchaseOrderList) {
         this.id = id;
         this.name = name;
         this.userName = userName;
@@ -19,9 +32,11 @@ public class user {
         this.numberPhone = numberPhone;
         this.type = type;
         this.password = password;
+        this.productList = productList;
+        this.purchaseOrderList = purchaseOrderList;
     }
 
-    public user(){
+    public User(){
     };
 
     public Integer getId() {
@@ -86,6 +101,22 @@ public class user {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public List<Product> getProductList() {
+        return productList;
+    }
+
+    public void setProductList(List<Product> productList) {
+        this.productList = productList;
+    }
+
+    public List<PurchaseOrder> getPurchaseOrderList() {
+        return purchaseOrderList;
+    }
+
+    public void setPurchaseOrderList(List<PurchaseOrder> purchaseOrderList) {
+        this.purchaseOrderList = purchaseOrderList;
     }
 
     @Override
